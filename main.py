@@ -121,3 +121,26 @@ plt.legend()
 
 plt.show()
 
+from xgboost import XGBRegressor
+
+xgb = XGBRegressor(
+    n_estimators=1000,
+    learning_rate=0.03,
+    max_depth=5,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    random_state=42
+)
+
+xgb.fit(X_train, Y_train)
+
+xgb_predictions = xgb.predict(X_test)
+
+from sklearn.metrics import mean_squared_error, r2_score
+import numpy as np
+
+xgb_rmse = np.sqrt(mean_squared_error(Y_test, xgb_predictions))
+xgb_r2 = r2_score(Y_test, xgb_predictions)
+
+print("XGBoost RMSE:", xgb_rmse)
+print("XGBoost R2:", xgb_r2)
