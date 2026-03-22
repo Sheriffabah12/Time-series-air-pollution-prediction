@@ -140,6 +140,67 @@ from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
 
 xgb_rmse = np.sqrt(mean_squared_error(Y_test, xgb_predictions))
+
+# XGBoost predictions
+xgb_predictions = xgb.predict(X_test)
+
+# Plot Actual vs Predicted for XGBoost
+plt.figure(figsize=(10,5))
+plt.plot(Y_test.values, label="Actual London NO2")
+plt.plot(xgb_predictions, label="Predicted London NO2 (XGBoost)")
+
+plt.title("Actual vs Predicted (XGBoost)")
+plt.xlabel("Time")
+plt.ylabel("NO2 Level")
+plt.legend()
+plt.savefig("xgboost_actual_vs_predicted.png")
+plt.show()
+
+# Get feature importance
+xgb_importance = pd.Series(xgb.feature_importances_, index=X.columns)
+
+# Plot
+xgb_importance.sort_values().plot(kind='barh', figsize=(8,5))
+
+plt.title("XGBoost Feature Importance")
+plt.xlabel("Importance")
+plt.ylabel("Features")
+
+# Save image
+plt.savefig("xgboost_feature_importance.png")
+
+plt.show()
+
+xgb_errors = Y_test - xgb_predictions
+
+plt.figure(figsize=(8,5))
+
+plt.hist(xgb_errors, bins=30)
+
+plt.title("XGBoost Prediction Error Distribution")
+plt.xlabel("Prediction Error")
+plt.ylabel("Frequency")
+
+plt.savefig("xgboost_error_distribution.png")
+
+plt.show()
+
+
+# 1. ACTUAL vs PREDICTED (COMPARISON)
+
+plt.figure(figsize=(12,6))
+
+plt.plot(Y_test.values, label="Actual", color="black")
+plt.plot(rf_predictions, label="Random Forest", linestyle="--")
+plt.plot(xgb_predictions, label="XGBoost", linestyle=":")
+
+plt.title("Actual vs Predicted Comparison (RF vs XGBoost)")
+plt.xlabel("Time")
+plt.ylabel("NO2 Level")
+plt.legend()
+
+plt.savefig("comparison_actual_vs_predicted.png")
+plt.show()
 xgb_r2 = r2_score(Y_test, xgb_predictions)
 
 print("XGBoost RMSE:", xgb_rmse)
