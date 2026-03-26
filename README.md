@@ -1,4 +1,4 @@
-# 🌫️ London NO2 Air Pollution Forecasting
+#  London NO2 Air Pollution Forecasting
 
 A machine learning project that predicts London's NO2 (nitrogen dioxide) air pollution levels using **Random Forest** and **XGBoost** regressors, with time-series feature engineering.
 
@@ -12,7 +12,7 @@ This project uses hourly NO2 measurements from London and Paris monitoring stati
 
 
 
-## 📁 Project Structure
+##  Project Structure
 
 
 ├── no2_forecasting.ipynb          # Main Jupyter notebook
